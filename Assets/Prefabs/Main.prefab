@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 1396306755552198178}
   - component: {fileID: 5723531245196303611}
   - component: {fileID: 432697813}
+  - component: {fileID: 531311739534162797}
   m_Layer: 0
   m_Name: Main
   m_TagString: Player
@@ -238,12 +239,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 707e940d7d1db4e43bbd57270b4be1a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  inventoryShowing: 0
   moveSpeed: 5
   jumpForce: 5
   onGround: 1
   hit: 0
   terrainGeneratior: {fileID: 0}
+  playerRange: 2
   mousePos: {x: 0, y: 0}
+--- !u!114 &531311739534162797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2312970508409808744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce0248007d0d5c458ffb857859a03e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 0}
+  inventoryWidth: 9
+  inventoryHeight: 4
 --- !u!1 &2312970508809074702
 GameObject:
   m_ObjectHideFlags: 0

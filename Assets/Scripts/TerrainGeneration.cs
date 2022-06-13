@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TerrainGeneration : MonoBehaviour
 {
+    public GameObject tileDrop;
+
     [Header("Tile Atlas")]
     public TileAtlas tileAtlas;
     
@@ -28,6 +30,7 @@ public class TerrainGeneration : MonoBehaviour
 
     private List<Vector2> worldTiles = new List<Vector2>();
     private List<GameObject> worldTileObjects = new List<GameObject>();
+    private List<TileClass> worldTileClasses = new List<TileClass>();
 
     private void OnValidate()
     {
@@ -70,24 +73,25 @@ public class TerrainGeneration : MonoBehaviour
     }
     public void GenerateTerrain()
     {
+        TileClass tileSprite;
         for (int x = 0; x < worldSize; x++)
         {
             for (int y = 0; y < worldSize; y++)
             {
-                Sprite tileSprite;
+                
                 if (caveNoiseTexture.GetPixel(x, y).r > surfaceValue)
                 {
 
                     if (y > 98)
                     {
-                        tileSprite = tileAtlas.dirt.tileSprite;
+                        tileSprite = tileAtlas.dirt;
                     }
                     else
                     {
                         if(ironSpread.GetPixel(x,y).r > 0.5f)
-                            tileSprite = tileAtlas.iron.tileSprite;
+                            tileSprite = tileAtlas.iron;
                         else
-                         tileSprite = tileAtlas.stone.tileSprite;
+                         tileSprite = tileAtlas.stone;
                     }
                     PlaceTile(tileSprite,x,y);
 
@@ -100,10 +104,19 @@ public class TerrainGeneration : MonoBehaviour
     {
         if (worldTiles.Contains(new Vector2Int(x, y)) && x >= 0 && x <= worldSize && y <= worldSize)
         {
-            GameObject.Destroy(worldTileObjects[worldTiles.IndexOf(new Vector2(x, y))]);
+            
+            GameObject newTileDrop = Instantiate(tileDrop, new Vector2(x, y), Quaternion.identity);
+            newTileDrop.GetComponent<SpriteRenderer>().sprite = worldTileClasses[worldTiles.IndexOf(new Vector2(x, y))].tileSprite;
+            ItemClass tileDropItem = new ItemClass(worldTileClasses[worldTiles.IndexOf(new Vector2(x, y))]);
+            newTileDrop.GetComponent<TileDropController>().itm = tileDropItem;
+            Destroy(worldTileObjects[worldTiles.IndexOf(new Vector2(x, y))]);
+
+            worldTileObjects.RemoveAt(worldTiles.IndexOf(new Vector2(x, y)));
+            worldTileClasses.RemoveAt(worldTiles.IndexOf(new Vector2(x, y)));
+            worldTiles.RemoveAt(worldTiles.IndexOf(new Vector2(x, y)));
         }
     }
-    public void PlaceTile(Sprite tileSprite,int x, int y)
+    public void PlaceTile(TileClass tileClass,int x, int y)
     {
         GameObject newTile = new GameObject();
 
@@ -116,12 +129,13 @@ public class TerrainGeneration : MonoBehaviour
         newTile.AddComponent<BoxCollider2D>();
         newTile.GetComponent<BoxCollider2D>().size = Vector2.one;
         newTile.tag = "Ground";
-        newTile.GetComponent<SpriteRenderer>().sprite = tileSprite;
-        newTile.name = tileSprite.name;
+        newTile.GetComponent<SpriteRenderer>().sprite = tileClass.tileSprite;
+        newTile.name = tileClass.name;
         newTile.transform.position = new Vector2(x + 0.5f, y + 0.5f);
 
         worldTiles.Add(newTile.transform.position - (Vector3.one * 0.5f));
         worldTileObjects.Add(newTile);
+        worldTileClasses.Add(tileClass);
     }
     public void GenerateNoiseTexture(float frequency, float limit, Texture2D noiseTexture)
     {

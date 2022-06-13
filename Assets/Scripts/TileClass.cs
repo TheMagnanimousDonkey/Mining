@@ -7,6 +7,7 @@ public class TileClass : ScriptableObject
     public string tileName;
     public Sprite tileSprite;
     public bool isSolid = true;
+    public bool isStackable = true;
 
     public float rarity;
 }
