@@ -53,6 +53,7 @@ public class TerrainGeneration : MonoBehaviour
 
         }
         seed = Random.Range(-10000, 10000);
+        
         GenerateNoiseTexture(caveFreq, surfaceValue, caveNoiseTexture);
         //ores
         GenerateNoiseTexture(ironRarity, ironSize, ironSpread);
@@ -120,9 +121,9 @@ public class TerrainGeneration : MonoBehaviour
     {
         GameObject newTile = new GameObject();
 
-        int chunkCoord = (Mathf.RoundToInt(x / chunkSize) * chunkSize);
-        chunkCoord /= chunkSize;
-        newTile.transform.parent = worldChunks[(int)chunkCoord].transform;
+        int chunkCoord = Mathf.RoundToInt((x / chunkSize) * chunkSize);
+        float inter = chunkCoord / chunkSize;
+        newTile.transform.parent = worldChunks[Mathf.RoundToInt(inter)].transform;
 
         
         newTile.AddComponent<SpriteRenderer>();

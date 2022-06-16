@@ -260,7 +260,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce0248007d0d5c458ffb857859a03e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tool: {fileID: 11400000, guid: 6ab1e8486fe56b44494fbd7ca780f17a, type: 2}
+  offset: {x: -257, y: -220}
+  multiplier: {x: 53, y: 53}
+  inventorySlotPrefab: {fileID: 6486670063730854564, guid: ce8535ac45fab7940aead2723adc7e42, type: 3}
   inventoryUI: {fileID: 0}
+  stackLimit: 64
   inventoryWidth: 9
   inventoryHeight: 4
 --- !u!1 &2312970508809074702
