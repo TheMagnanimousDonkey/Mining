@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Loose : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D any)
 
     {
-        if (any.gameObject != null)
+    Enemy enemy = any.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            Destroy(gameObject);
+
+            SceneManager.LoadScene("Title");
         }
+
     }
+
 }

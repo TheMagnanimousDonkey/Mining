@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
         if (Time.time > nextSpawn)
         {
             Instantiate(enemySpawn, enemySpawnPoint.position, Quaternion.identity);
-            nextSpawn = nextSpawn + Random.Range(1, 3);
+            nextSpawn = nextSpawn + Random.Range(3, 5);
             StartCoroutine(Delay());
         }
 
