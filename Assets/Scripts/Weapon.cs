@@ -10,25 +10,14 @@ public class Weapon : MonoBehaviour
     public Transform enemySpawnPoint;
     public GameObject enemySpawn;
     public GameObject ironText;
-    private float nextSpawn = 4f;
     private IronUpdate ironUpdate;
 
     private void Start()
     {
         ironUpdate = GetComponent<IronUpdate>();
+        StartCoroutine(Delay());
     }
 
-    private void FixedUpdate()
-    {
-
-        if (Time.time > nextSpawn)
-        {
-            Instantiate(enemySpawn, enemySpawnPoint.position, Quaternion.identity);
-            nextSpawn = nextSpawn + Random.Range(3, 5);
-            StartCoroutine(Delay());
-        }
-
-    }
     void Shoot()
     {
         Instantiate(BulletPrefab, firePoint.position, firePoint.rotation);
@@ -36,6 +25,15 @@ public class Weapon : MonoBehaviour
     }
 
     IEnumerator Delay()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            Instantiate(enemySpawn, enemySpawnPoint.position, Quaternion.identity);
+            StartCoroutine(ShootDelay());
+        };
+    }
+    IEnumerator ShootDelay()
     {
 
     yield return new WaitForSeconds(2);
